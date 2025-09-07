@@ -9,6 +9,18 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+/* For mobile screens (below 768px width for example) */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 3.5rem;   
+        padding-left: 12rem;   
+        text-align: center; 
+    }
+
+    #outer, #output {
+        width: 95%; 
+    }
+}
 
 h1{
     padding-top: 0rem;
@@ -108,4 +120,5 @@ footer{
     color: white;
     font-style: italic;
     font-weight: lighter;
+
 }
