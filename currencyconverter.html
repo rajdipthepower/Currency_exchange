@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="currencyconverter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Currency Converter</title>
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <div id="divbody">
+    <div id="outer">
+        <div class="inner" id="from">
+            <img id="image1" alt="image">
+            <select class="options" id="f">
+            </select>
+            <input type="text" id="amount1" class="amount" inputmode="decimal" autocomplete="off">
+            <span id="first" style="color: red;"></span>
+        </div>
+        <div class="inner" id="exchange">
+            <button id="interchange">
+            <i class="fa fa-exchange"></i>
+            <br>
+            <!-- <p style="font-weight: bold;">Interchange</p> -->
+            </button>
+        </div>
+         <div class="inner" id="to">
+            <img id="image2" alt="image">
+            <select class="options" id="t">
+            </select>
+            <input type="text" id="amount2" class="amount" inputmode="decimal" autocomplete="off">
+            <span id="second" style="color: red;"></span>
+        </div>
+    </div>
+    <div id="output">
+    </div>
+    </div>
+    <footer>
+        Made By Rajdip <i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i>
+    </footer>
+    <script src="countrylist.js"></script>
+    <script src="currencyconverter.js"></script>
+</body>
+</html>
