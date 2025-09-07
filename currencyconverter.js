@@ -5,7 +5,6 @@ sel = document.getElementsByClassName("options");
 text1 = document.getElementById("amount1");
 text2 = document.getElementById("amount2");
 
-let flag = 0;
 let f,t;
 let c = 0;
 for(let j of sel){
@@ -27,7 +26,7 @@ for(let j of sel){
     }
     c++;
 }
-exchangeamount(f,t);
+exchangeamount(f,t).then(()=>{});
 
 /*We cannot write console.log(rate) outside cause rate value is assigned when promised resolved sent by asynchronous function but 
 console.log(rate) is synchronous so it executes first when rate is still undefined. */
@@ -37,12 +36,15 @@ for(let i of sel){
         if(evt.target.id==='f'){
             image1.src = `https://flagsapi.com/${evt.target.value}/shiny/64.png`;
             f = evt.target.value;
+            if(text1.value.length>30){}
+            else{exchangeamount(f,t).then((res)=>{text2.value = res*text1.value});}
         }
         if(evt.target.id==='t'){
             image2.src = `https://flagsapi.com/${evt.target.value}/shiny/64.png`;
             t = evt.target.value;
+            if(text1.value.length>30){}
+            else{exchangeamount(f,t).then((res)=>{text1.value = text2.value/res});}
         }
-        exchangeamount(f,t);
     /*event is occuring on the select element not options , hence event.target contains all options of select,
     we use event.target.selectedIndex or event.target.options[event.target.selectedIndex]*/
     })
@@ -61,7 +63,8 @@ async function exchangeamount(f,t){
             for(let j in countryList){
                 if(countryList[j]===t){
                     // console.log(data[i.toLowerCase()][j.toLowerCase()]);
-                    document.getElementById("output").innerText = `1 ${i} = ${data[i.toLowerCase()][j.toLowerCase()]} ${j}`;
+                    document.getElementById("output").innerHTML = `1 ${i} = ${data[i.toLowerCase()][j.toLowerCase()]} ${j} <br>
+                    1 ${j} = ${1/(data[i.toLowerCase()][j.toLowerCase()])} ${i}`;
                     console.log(`Fetch Successful ${fth.status}`);
                     return data[i.toLowerCase()][j.toLowerCase()]; //return statement acting like break
                     // break; 
@@ -80,7 +83,7 @@ function checkValid(e){
                 return true;
             }
             //This line text1.value.indexOf('.')==-1 checks that initially no '.' was present or not,-1 means nothing was present
-            else if(e.key=='.' && txt1.value.indexOf('.')==-1){
+            else if(e.key=='.' && e.target.value.indexOf('.')==-1){
 
                 return true;
             }
@@ -105,8 +108,11 @@ text2.addEventListener("keydown",(e)=>checkValid(e));
 text1.addEventListener("input",(e)=>{inputValue(e)});
 text2.addEventListener("input",(e)=>{inputValue(e)});
 
+let lastEdited ;
+
 function inputValue(e){
         if(e.target == text1){
+            lastEdited = "left";
             exchangeamount(f,t).then((res)=>{
                 text2.value = res * e.target.value;
                 if(e.target.value.length>30){
@@ -116,12 +122,12 @@ function inputValue(e){
             })
         }
         else{
+            lastEdited = "right";
             exchangeamount(f,t).then((res)=>{
-                text1.value = res * e.target.value;
+                text1.value = e.target.value/res;
                 if(e.target.value.length>30){
                     e.target.value = NaN;
                     document.getElementById("second").innerText = "Please Enter a valid amount!!";
-                    flag = 1;
                 }
             })
         }
@@ -130,11 +136,11 @@ function inputValue(e){
 inter = document.getElementById("interchange");
 inter.addEventListener("click",()=>{
     inter.classList.toggle('buttonclass');
-    let temp = image1.src;
-    image1.src = image2.src;
-    image2.src = temp;
-
-    [sel.item(0).value ,sel.item(1).value] = [sel.item(1).value,sel.item(0).value]
+    // let temp = image1.src;
+    // image1.src = image2.src;
+    // image2.src = temp;
+    [image1.src, image2.src] = [image2.src, image1.src];
+    [sel.item(0).value ,sel.item(1).value] = [sel.item(1).value,sel.item(0).value];
 
     //we need to change only the value and innerText will automatically change.
     
@@ -142,19 +148,14 @@ inter.addEventListener("click",()=>{
 
     /*This logic can't be used coz changing value of selected element might not immeditaely update innerText of selected option. */
 
-    if(flag == 0){
-     k = t ;
-     t = f;
-     f = k;
-     exchangeamount(f,t);
-     let temporary = text1.value;
-     text1.value = text2.value;
-     text2.value = temporary;
-    }
-    else{
-     exchangeamount(f,t);   
-     let temporary = text1.value;
-     text1.value = text2.value;
-     text2.value = temporary;
-    }
+    [f,t] = [t,f];
+    
+    //  let temporary = text1.value;
+    //  text1.value = text2.value;
+    //  text2.value = temporary;
+    //  [text1.value, text2.value] = [text2.value, text1.value];
+     if(lastEdited=="left"){
+     text1.dispatchEvent(new Event("input")); //we want to value to be recalculatd based on from value after interchanging
+     lastEdited = "left";
+     }else if(lastEdited=="right"){text2.dispatchEvent(new Event("input"));lastEdited="right";} 
 })

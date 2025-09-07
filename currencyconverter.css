@@ -11,13 +11,17 @@ body{
 }
 
 h1{
-    padding-top: 1rem;
+    padding-top: 0rem;
     text-align: center;
     text-transform: capitalize;
-    font-weight: 1500;
-    font-style: oblique;
-    font-size: 3rem;
-    color: Black;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 3.5rem;
+    color: rgb(27, 17, 17);
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    letter-spacing: 2px;
+
+    /* padding-left: 15rem; */
 }
 
 #divbody{
@@ -30,7 +34,9 @@ h1{
     flex-wrap: wrap;
 }
 #outer{
-    background-color: rgb(230, 230, 134);
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
     height: 40%;
     width: 38.4rem;
     display:flex;
@@ -45,7 +51,7 @@ h1{
     gap: 1rem;
 }
 .options{
-    width: auto;
+    width: 11rem;
     height: 2rem;
     text-align:start;
     padding-left: 0.2rem;
@@ -68,16 +74,27 @@ button{
     transform: rotateZ(360deg);
 }
 #output{
-    height: 20%;
+    height: auto;
+    min-height: 3rem;
     width: 38.4rem;
     text-align: center;
-    color: black;
-    font-weight: 1000;
-    font-size: 1.5rem;
-    background-color: rgb(230, 230, 134);
+    color: #1a1a1a;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    /* background-color: rgb(230, 230, 134); */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+    /* transform is used when we want to animate only translation or rotation */
+    /* all is used when we want all properties like color,background color to animate */
+}
+#output:hover {
+    color: #e63946; /* softer red */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* deeper shadow */
 }
 .amount{
-    width: 10rem;
+    width: 12rem;
     height: 2rem;
     border-radius: 10%;
     border: 0.1px solid black;
